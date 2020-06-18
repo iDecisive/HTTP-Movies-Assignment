@@ -121,3 +121,11 @@ form {
   width: 200px;
 
 }
+
+.form-div {
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+
+}

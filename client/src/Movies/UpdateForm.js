@@ -90,12 +90,24 @@ function UpdateForm({ movieList, getMovieList }) {
 
             history.push(`/movies/${params.id}`);
 
+            setFormInput({
+
+                id: params.id,
+                title: '',
+                director: '',
+                metascore: '',
+                stars: ''
+
+            });
+
         })
         .catch(error => console.log(error))
 
     }
 
     return (
+
+        <div className='form-div'>
 
         <form className='update-form' onSubmit={updateMovie}>
 
@@ -122,6 +134,7 @@ function UpdateForm({ movieList, getMovieList }) {
             <button>Save</button>
 
         </form>
+        </div>
 
     );
 }
