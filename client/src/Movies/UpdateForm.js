@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, Redirect } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useParams, useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 function UpdateForm({ movieList, setMovieList, getMovieList }) {
@@ -21,40 +21,14 @@ function UpdateForm({ movieList, setMovieList, getMovieList }) {
 
     //Functions
 
+    let history = useHistory();
+
     let getCurrentMovie = () => {
 
         return movieList.filter(item => Number(item.id) === Number(params.id))[0];
 
     }
 
-    useEffect(() => {
-
-        let currMovie = getCurrentMovie();
-
-        console.log(currMovie);
-
-        if (currMovie === undefined) {
-
-            setFormInput({
-
-                ...formInput,
-                stars: []
-    
-            });
-
-        } else {
-
-            setFormInput({
-
-                ...formInput,
-                stars: currMovie.stars
-    
-            });
-
-        }
-
-
-    },[movieList]);
 
     let inputChange = event => {
 
@@ -72,6 +46,24 @@ function UpdateForm({ movieList, setMovieList, getMovieList }) {
 
         event.preventDefault();
 
+        let currMovie = getCurrentMovie();
+
+        console.log(currMovie);
+
+        setFormInput({
+
+            ...formInput,
+            stars: []
+
+        });
+
+        setFormInput({
+
+            ...formInput,
+            stars: currMovie.stars
+
+        });
+
         axios.put(`http://localhost:5000/api/movies/${params.id}`, {
 
             id: Number(formInput.id),
@@ -87,7 +79,7 @@ function UpdateForm({ movieList, setMovieList, getMovieList }) {
         
             setMovieList(response.data)
 
-            return <Redirect to={`/movies${params.id}`} />
+            history.push(`/movies/${params.id}`);
 
         })
         .catch(error => console.log(error))
