@@ -3,6 +3,8 @@ body {
   padding: 0;
   font-family: sans-serif;
   background-color: #f2f2f2;
+
+
 }
 
 .movie-card {
@@ -105,5 +107,17 @@ body {
 .update-form {
 
   text-align: center;
+
+}
+
+form {
+
+  display:flex;
+  flex-direction: column;
+
+  justify-content: center;
+  align-items: center;
+
+  width: 200px;
 
 }

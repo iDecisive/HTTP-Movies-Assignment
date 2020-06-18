@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import axios from 'axios';
 
@@ -14,8 +14,7 @@ function UpdateForm({ movieList, getMovieList }) {
         title: '',
         director: '',
         metascore: '',
-        newstar: '',
-        stars: []
+        stars: ''
 
     });
 
@@ -28,6 +27,34 @@ function UpdateForm({ movieList, getMovieList }) {
         return movieList.filter(item => Number(item.id) === Number(params.id))[0];
 
     }
+
+    useEffect(() => {
+
+        console.log(movieList);
+
+        if(movieList[0] !== undefined) {
+
+            console.log('movieList is defined!!!')
+
+            let currMovie = getCurrentMovie();
+
+            console.log('Current movie stars: ', currMovie.stars);
+
+
+            setFormInput({
+
+                ...formInput,
+                stars: currMovie.stars.toString()
+
+            });
+
+        } else {
+
+            console.log('movieList is not defined')
+
+        }
+
+    },[movieList]);
 
 
     let inputChange = event => {
@@ -46,31 +73,13 @@ function UpdateForm({ movieList, getMovieList }) {
 
         event.preventDefault();
 
-        let currMovie = getCurrentMovie();
-
-        console.log(currMovie);
-
-        setFormInput({
-
-            ...formInput,
-            stars: []
-
-        });
-
-        setFormInput({
-
-            ...formInput,
-            stars: currMovie.stars
-
-        });
-
         axios.put(`http://localhost:5000/api/movies/${params.id}`, {
 
             id: Number(formInput.id),
             title: formInput.title,
             director: formInput.director,
             metascore: Number(formInput.metascore),
-            stars: formInput.stars
+            stars: formInput.stars.split(',')
 
         })
         .then(response => {
@@ -92,22 +101,22 @@ function UpdateForm({ movieList, getMovieList }) {
 
             <label>
                 Title
-                <input type='text' name='title' onChange={inputChange}></input>
+                <input type='text' name='title' onChange={inputChange} value={formInput.title}></input>
             </label>
 
             <label>
                 Director
-                <input type='text' name='director' onChange={inputChange}></input>
+                <input type='text' name='director' onChange={inputChange} value={formInput.director}></input>
             </label>
 
             <label>
                 Metascore
-                <input type='text' name='metascore' onChange={inputChange}></input>
+                <input type='text' name='metascore' onChange={inputChange} value={formInput.metascore}></input>
             </label>
 
             <label>
-                Add Stars (Optional)
-                <input type='text' name='newstar' onChange={inputChange}></input>
+                Stars (Seperate stars with commas)
+                <textarea name='stars' onChange={inputChange} value={formInput.stars}></textarea>
             </label>
 
             <button>Save</button>
