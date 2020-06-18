@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import axios from 'axios';
 
-function UpdateForm({ movieList, setMovieList, getMovieList }) {
+function UpdateForm({ movieList, getMovieList }) {
 
     //State
 
@@ -77,7 +77,7 @@ function UpdateForm({ movieList, setMovieList, getMovieList }) {
             
             console.log(response)
         
-            setMovieList(response.data)
+            getMovieList()
 
             history.push(`/movies/${params.id}`);
 

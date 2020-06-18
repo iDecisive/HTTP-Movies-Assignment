@@ -68,13 +68,26 @@ body {
 
 .update-button {
   position: absolute;
-  top: 200px;
+  top: 100px;
   right: 25px;
   border: 1px solid grey;
   padding: 5px 10px;
   background-color: lightseagreen;
 }
 .update-button:hover {
+  background-color: green;
+  color: white;
+}
+
+.remove-button {
+  position: absolute;
+  top: 150px;
+  right: 25px;
+  border: 1px solid grey;
+  padding: 5px 10px;
+  background-color: lightseagreen;
+}
+.remove-button:hover {
   background-color: green;
   color: white;
 }
